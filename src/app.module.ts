@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OrdersModule } from './orders/orders.module';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
   imports: [OrdersModule, SequelizeModule.forRoot({
@@ -12,7 +13,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
     host: join(__dirname, 'database.sqlite'),
     autoLoadModels: true,
     models: [Order],
-  })],
+  }), AccountsModule],
   controllers: [AppController],
   providers: [AppService],
 })
