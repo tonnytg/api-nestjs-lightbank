@@ -1,0 +1,22 @@
+GET http://localhost:3000/accounts
+x-token: mldfuea0bjl
+###
+GET http://localhost:3000/accounts/ecb269cf-9973-4dc0-bd92-576b6125c9e5
+x-token: mldfuea0bjl
+
+###
+POST http://localhost:3000/accounts
+Content-Type: application/json
+
+{
+    "name": "conta 1"
+}
+
+###
+PATCH http://localhost:3000/accounts/ecb269cf-9973-4dc0-bd92-576b6125c9e5
+Content-Type: application/json
+
+{
+    "name": "conta 1 alterada",
+    "token": "mldfuea0bjl"
+}

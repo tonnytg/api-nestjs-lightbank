@@ -1,0 +1,32 @@
+GET http://localhost:3000/orders
+x-token: nwashx2nnej
+
+###
+GET http://localhost:3000
+x-token: nwashx2nnej
+
+###
+POST http://localhost:3000/orders
+Content-Type: application/json
+x-token: nwashx2nnej
+
+{
+    "amount": 1000.33,
+    "credit_card_number": "4485460940174065",
+    "credit_card_name": "Luiz Carlos",
+    "credit_card_expiration_month": 12,
+    "credit_card_expiration_year": 2022,
+    "credit_card_cvv": "123"
+}
+
+###
+PATCH http://localhost:3000/orders/ecb269cf-9973-4dc0-bd92-576b6125c9e5
+Content-Type: application/json
+
+{
+    "amount": 1000.33,
+    "credit_card_number": "111122222"
+}
+
+###
+DELETE http://localhost:3000/orders/ecb269cf-9973-4dc0-bd92-576b6125c9e5
