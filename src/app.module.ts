@@ -1,23 +1,46 @@
-import { Module } from '@nestjs/common';
-import { join } from 'path';
+import { Account } from './accounts/entities/account.entity';
 import { Order } from './orders/entities/order.entity';
+import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OrdersModule } from './orders/orders.module';
-import { SequelizeModule } from '@nestjs/sequelize';
 import { AccountsModule } from './accounts/accounts.module';
-import { Account } from './accounts/entities/account.entity';
+import { ConfigModule } from '@nestjs/config';
 
+//ES7 Decorators - Documentar ou estender
+// Configuração do banco
 @Module({
-  imports: [OrdersModule, SequelizeModule.forRoot({
-    dialect: 'sqlite',
-    host: join(__dirname, 'database.sqlite'),
-    autoLoadModels: true,
-    models: [Order, Account],
-    sync: {
-      alter: true,
-    }
-  }), AccountsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    SequelizeModule.forRoot({
+      dialect: process.env.DB_CONNECTION as any,
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      autoLoadModels: true,
+      models: [Order, Account],
+      sync: {
+        alter: true,
+        //force: true
+      },
+    }),
+    OrdersModule,
+    // Configuração do sqlite com sync
+    // SequelizeModule.forRoot({
+    //   dialect: 'sqlite',
+    //   host: join(__dirname, 'database.sqlite'),
+    //   autoLoadModels: true,
+    //   models: [Order, Account],
+    //   sync: {
+    //     alter: true,
+    //   },
+    // }),
+    AccountsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
